@@ -2,7 +2,9 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import { ArchiveForm } from "@/components/admin/admin-forms";
 import { ReopenForm } from "@/components/claims/review-forms";
+import { holdingPeriodDays, isPastHolding } from "@/components/items/past-holding";
 import { SpecialBanner } from "@/components/items/special-banner";
 import {
   ArriveForm,
@@ -30,6 +32,7 @@ const notices: Record<string, string> = {
   secret: "The hidden detail is updated.",
   transferred: "The transfer is recorded. The current desk is updated.",
   arrived: "The item is marked arrived.",
+  archived: "The item is archived. Its photos are deleted and it no longer appears in search.",
   contested: "The item is reopened as contested. Use the previous owner's contact details below to recover it.",
   unchanged: "That item could not be updated.",
 };
@@ -75,12 +78,19 @@ async function StaffItem({
   const noticeKey = (await searchParams).notice;
   const notice = noticeKey ? notices[noticeKey] : undefined;
   const supabase = await createClient();
-  const [{ data: item }, { data: secret }, { data: transfers }, { data: locations }, { data: claims }] =
-    await Promise.all([
+  const [
+    { data: item },
+    { data: secret },
+    { data: transfers },
+    { data: locations },
+    { data: claims },
+    { data: auditRows },
+    holdingDays,
+  ] = await Promise.all([
       supabase
         .from("items")
         .select(
-          "id, ref_code, description, found_at, status, current_location_id, intended_location_id, categories(name, special_handling), buildings(name), intended:locations!items_intended_location_id_fkey(id, name, building, room, hours, kind), current:locations!items_current_location_id_fkey(id, name, building, room, hours, kind), item_photos(storage_path)",
+          "id, ref_code, description, found_at, status, received_at, archived_outcome, current_location_id, intended_location_id, categories(name, special_handling), buildings(name), intended:locations!items_intended_location_id_fkey(id, name, building, room, hours, kind), current:locations!items_current_location_id_fkey(id, name, building, room, hours, kind), item_photos(storage_path)",
         )
         .eq("id", id)
         .maybeSingle(),
@@ -100,6 +110,12 @@ async function StaffItem({
         )
         .eq("item_id", id)
         .order("created_at"),
+      supabase
+        .from("audit_log")
+        .select("id, entity_type, action, old_status, new_status, created_at, actor:profiles(email)")
+        .or(`entity_id.eq.${id},details->>item_id.eq.${id}`)
+        .order("created_at"),
+      holdingPeriodDays(),
     ]);
 
   if (!item) {
@@ -128,6 +144,8 @@ async function StaffItem({
     (location) => location.id !== item.current_location_id,
   );
   const claimRows = claims ?? [];
+  const pastHolding =
+    item.status === "received" && item.received_at !== null && isPastHolding(item.received_at, holdingDays);
   const previousOwner =
     item.status === "contested"
       ? [...claimRows].reverse().find((claim) => claim.rejection_reason?.startsWith("Reopened as contested"))
@@ -242,6 +260,22 @@ async function StaffItem({
         </section>
       ) : null}
 
+      {pastHolding && atThisDesk ? (
+        <section aria-labelledby="archive-item" className="space-y-3">
+          <h2 id="archive-item" className="text-xl font-semibold">
+            Archive
+          </h2>
+          <p>This item has been here more than {holdingDays} days without being collected.</p>
+          <ArchiveForm itemId={item.id} />
+        </section>
+      ) : null}
+      {item.status === "archived" ? (
+        <p>
+          Archived as {item.archived_outcome === "donated" ? "donated" : "disposed"}. An admin can restore it from
+          Archived items.
+        </p>
+      ) : null}
+
       {(transfers ?? []).length > 0 ? (
         <section aria-labelledby="transfer-history" className="space-y-2">
           <h2 id="transfer-history" className="text-xl font-semibold">
@@ -260,6 +294,25 @@ async function StaffItem({
               );
             })}
           </ul>
+        </section>
+      ) : null}
+
+      {(auditRows ?? []).length > 0 ? (
+        <section aria-labelledby="audit-trail" className="space-y-2">
+          <h2 id="audit-trail" className="text-xl font-semibold">
+            Audit trail
+          </h2>
+          <ol className="space-y-1 text-sm">
+            {(auditRows ?? []).map((row) => (
+              <li key={row.id}>
+                {formatToronto(row.created_at)}: {row.entity_type === "claim" ? "Claim" : "Item"}{" "}
+                {row.action === "insert"
+                  ? `created as ${(row.new_status ?? "").replaceAll("_", " ")}`
+                  : `${(row.old_status ?? "").replaceAll("_", " ")} → ${(row.new_status ?? "").replaceAll("_", " ")}`}
+                , {related(row.actor)?.email ?? "system"}
+              </li>
+            ))}
+          </ol>
         </section>
       ) : null}
 

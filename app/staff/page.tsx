@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 import { ClaimQueues } from "@/components/claims/claim-queues";
+import { PastHoldingPeriod } from "@/components/items/past-holding";
 import { SpecialBanner } from "@/components/items/special-banner";
 import { PageShell } from "@/components/layout/page-shell";
 import { buttonVariants } from "@/components/ui/button";
@@ -172,6 +173,8 @@ async function StaffDesk() {
           })}
         </ul>
       </section>
+
+      <PastHoldingPeriod locationId={profile.role === "admin" ? null : profile.locationId} />
     </>
   );
 }

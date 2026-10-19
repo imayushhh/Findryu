@@ -1,0 +1,288 @@
+npm warn Unknown env config "devdir". This will stop working in the next major version of npm.
+
+> yorklostandfound@0.1.0 dev
+> next dev
+
+▲ Next.js 16.4.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.0.0.86:3000
+- Environments: .env.local
+✓ Ready in 1450ms
+✓ Running next.config.ts took 92ms
+- Cache Components enabled
+- Partial Prefetching enabled
+- Experiments (use with caution):
+  · serverActions
+
+○ Compiling /staff ...
+ GET /admin/users 200 in 8.0s (next.js: 5.5s, proxy.ts: 1134ms, application-code: 1370ms)
+ GET /staff 200 in 8.1s (next.js: 5.5s, proxy.ts: 1129ms, application-code: 1472ms)
+ GET / 200 in 675ms (next.js: 482ms, proxy.ts: 8ms, application-code: 185ms)
+ GET / 200 in 186ms (next.js: 44ms, proxy.ts: 13ms, application-code: 129ms)
+ GET /auth/confirm?token_hash=ad92a4e00b4a1a56c06b52ffdca133867f705c3497b24f972e55b1fa&type=magiclink 200 in 423ms (next.js: 310ms, proxy.ts: 9ms, application-code: 104ms)
+ GET / 200 in 241ms (next.js: 13ms, proxy.ts: 11ms, application-code: 217ms)
+ POST /auth/confirm?token_hash=ad92a4e00b4a1a56c06b52ffdca133867f705c3497b24f972e55b1fa&type=magiclink 200 in 488ms (next.js: 18ms, proxy.ts: 7ms, application-code: 463ms)
+  └─ ƒ completeSignIn({}) in 188ms actions/auth.ts
+ GET / 200 in 121ms (next.js: 10ms, proxy.ts: 11ms, application-code: 101ms)
+ GET /auth/confirm?token_hash=d01ae305c8f663b3329d48bd7681bc9a1210a52ea12700c1a429ba11&type=magiclink 200 in 118ms (next.js: 10ms, proxy.ts: 10ms, application-code: 98ms)
+ GET / 200 in 200ms (next.js: 12ms, proxy.ts: 12ms, application-code: 175ms)
+ POST /auth/confirm?token_hash=d01ae305c8f663b3329d48bd7681bc9a1210a52ea12700c1a429ba11&type=magiclink 200 in 323ms (next.js: 10ms, proxy.ts: 8ms, application-code: 305ms)
+  └─ ƒ completeSignIn({}) in 85ms actions/auth.ts
+ GET /staff/intake 200 in 1210ms (next.js: 601ms, proxy.ts: 82ms, application-code: 527ms)
+ GET /staff/items/77f9ffc1-5873-427b-af56-975a088ae469?notice=received 200 in 2.1s (next.js: 409ms, proxy.ts: 68ms, generate-params: 1184ms, application-code: 464ms)
+ POST /staff/intake 200 in 2.9s (next.js: 37ms, proxy.ts: 92ms, application-code: 2.7s)
+  └─ ƒ logWalkInItem({}) in 560ms actions/items.ts
+ GET /staff/intake 200 in 783ms (next.js: 12ms, proxy.ts: 76ms, application-code: 695ms)
+ GET /staff/items/d13ef12d-7157-4ba1-b908-ba3b8f4cc94c?notice=received 200 in 552ms (next.js: 26ms, proxy.ts: 66ms, generate-params: 8ms, application-code: 452ms)
+ POST /staff/intake 200 in 1105ms (next.js: 8ms, proxy.ts: 73ms, application-code: 1024ms)
+  └─ ƒ logWalkInItem({}) in 453ms actions/items.ts
+ GET /staff/intake 200 in 552ms (next.js: 12ms, proxy.ts: 70ms, application-code: 469ms)
+ GET /staff/items/fd138fec-3468-49c0-895a-96a18f9f1222?notice=received 200 in 715ms (next.js: 39ms, proxy.ts: 229ms, generate-params: 18ms, application-code: 429ms)
+ POST /staff/intake 200 in 1368ms (next.js: 10ms, proxy.ts: 62ms, application-code: 1296ms)
+  └─ ƒ logWalkInItem({}) in 557ms actions/items.ts
+ GET /items/FYU-000019/claim 200 in 4.3s (next.js: 1370ms, proxy.ts: 10ms, generate-params: 2.1s, application-code: 866ms)
+ GET /my?notice=claimed 200 in 1066ms (next.js: 666ms, proxy.ts: 13ms, application-code: 388ms)
+ POST /items/FYU-000019/claim 200 in 1318ms (next.js: 30ms, proxy.ts: 11ms, generate-params: 10ms, application-code: 1268ms)
+  └─ ƒ submitClaim({}) in 171ms actions/claims.ts
+ GET /staff 200 in 820ms (next.js: 42ms, proxy.ts: 90ms, application-code: 688ms)
+ GET /staff/claims/f32d2b1f-c93d-4f59-bba7-a7358f6581e0 200 in 2.1s (next.js: 345ms, proxy.ts: 67ms, generate-params: 1087ms, application-code: 609ms)
+ GET /staff/claims/f32d2b1f-c93d-4f59-bba7-a7358f6581e0?notice=rejected 200 in 1403ms (next.js: 270ms, proxy.ts: 115ms, generate-params: 0.1ms, application-code: 1018ms)
+ POST /staff/claims/f32d2b1f-c93d-4f59-bba7-a7358f6581e0 200 in 2.3s (next.js: 583ms, proxy.ts: 93ms, generate-params: 54ms, application-code: 1611ms)
+  └─ ƒ rejectClaim({}, {}) in 162ms actions/claim-review.ts
+ GET /items/FYU-000020/claim 200 in 974ms (next.js: 35ms, proxy.ts: 15ms, generate-params: 22ms, application-code: 902ms)
+ POST /items/FYU-000020/claim 200 in 341ms (next.js: 159ms, proxy.ts: 16ms, generate-params: 0.1ms, application-code: 166ms)
+  └─ ƒ submitClaim({}) in 127ms actions/claims.ts
+ GET /staff/claims/undefined 200 in 621ms (next.js: 69ms, proxy.ts: 143ms, generate-params: 10ms, application-code: 397ms)
+ GET / 200 in 414ms (next.js: 45ms, proxy.ts: 12ms, application-code: 356ms)
+ GET / 200 in 323ms (next.js: 13ms, proxy.ts: 13ms, application-code: 297ms)
+ GET /staff/intake 200 in 543ms (next.js: 35ms, proxy.ts: 75ms, application-code: 433ms)
+ GET /staff/items/d0cc467c-4a23-48fd-85ed-f209a8c106b4?notice=received 200 in 702ms (next.js: 48ms, proxy.ts: 86ms, generate-params: 11ms, application-code: 556ms)
+ POST /staff/intake 200 in 1462ms (next.js: 23ms, proxy.ts: 92ms, application-code: 1347ms)
+  └─ ƒ logWalkInItem({}) in 610ms actions/items.ts
+ GET /staff/intake 200 in 463ms (next.js: 10ms, proxy.ts: 68ms, application-code: 386ms)
+ GET /staff/items/6dcfe5db-0992-4310-b054-627ebef2c6b4?notice=received 200 in 506ms (next.js: 15ms, proxy.ts: 75ms, generate-params: 9ms, application-code: 408ms)
+ POST /staff/intake 200 in 1069ms (next.js: 15ms, proxy.ts: 72ms, application-code: 982ms)
+  └─ ƒ logWalkInItem({}) in 454ms actions/items.ts
+ GET /staff/intake 200 in 409ms (next.js: 9ms, proxy.ts: 65ms, application-code: 335ms)
+ GET /staff/items/2cb320c8-b54f-47f2-b159-1e878e8de4ed?notice=received 200 in 595ms (next.js: 11ms, proxy.ts: 71ms, generate-params: 10ms, application-code: 504ms)
+ POST /staff/intake 200 in 1277ms (next.js: 17ms, proxy.ts: 63ms, application-code: 1197ms)
+  └─ ƒ logWalkInItem({}) in 580ms actions/items.ts
+ GET /items/FYU-000022/claim 200 in 433ms (next.js: 17ms, proxy.ts: 9ms, generate-params: 8ms, application-code: 399ms)
+ GET /my?notice=claimed 200 in 291ms (next.js: 43ms, proxy.ts: 7ms, application-code: 241ms)
+ POST /items/FYU-000022/claim 200 in 473ms (next.js: 11ms, proxy.ts: 10ms, generate-params: 7ms, application-code: 446ms)
+  └─ ƒ submitClaim({}) in 139ms actions/claims.ts
+ GET /staff 200 in 524ms (next.js: 28ms, proxy.ts: 88ms, application-code: 408ms)
+ GET /staff/claims/94e22a19-e6cf-4b95-a068-684b4dc99623 200 in 566ms (next.js: 16ms, proxy.ts: 75ms, generate-params: 11ms, application-code: 463ms)
+ GET /staff/claims/94e22a19-e6cf-4b95-a068-684b4dc99623?notice=rejected 200 in 549ms (next.js: 11ms, proxy.ts: 71ms, generate-params: 0.0ms, application-code: 467ms)
+ POST /staff/claims/94e22a19-e6cf-4b95-a068-684b4dc99623 200 in 833ms (next.js: 16ms, proxy.ts: 83ms, generate-params: 9ms, application-code: 725ms)
+  └─ ƒ rejectClaim({}, {}) in 155ms actions/claim-review.ts
+ GET /items/FYU-000023/claim 200 in 626ms (next.js: 14ms, proxy.ts: 9ms, generate-params: 10ms, application-code: 593ms)
+ GET /my?notice=claimed 200 in 307ms (next.js: 12ms, proxy.ts: 8ms, application-code: 287ms)
+ POST /items/FYU-000023/claim 200 in 695ms (next.js: 13ms, proxy.ts: 9ms, generate-params: 0.0ms, application-code: 673ms)
+  └─ ƒ submitClaim({}) in 347ms actions/claims.ts
+ GET /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23 200 in 724ms (next.js: 14ms, proxy.ts: 66ms, generate-params: 10ms, application-code: 634ms)
+ POST /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23 200 in 315ms (next.js: 14ms, proxy.ts: 72ms, generate-params: 8ms, application-code: 220ms)
+  └─ ƒ revealHiddenDetail("11f2a8d3-c4eb-44e9-9a89-5a545d3efa23") in 207ms actions/claim-review.ts
+ GET /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23?notice=approved 200 in 513ms (next.js: 13ms, proxy.ts: 71ms, generate-params: 0.0ms, application-code: 429ms)
+ POST /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23 200 in 780ms (next.js: 13ms, proxy.ts: 74ms, generate-params: 0.0ms, application-code: 693ms)
+  └─ ƒ approveClaim({}, {}) in 159ms actions/claim-review.ts
+ GET /my 200 in 428ms (next.js: 9ms, proxy.ts: 8ms, application-code: 411ms)
+ POST /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23?notice=approved 200 in 209ms (next.js: 18ms, proxy.ts: 84ms, generate-params: 11ms, application-code: 95ms)
+  └─ ƒ recordHandover({}, {}) in 81ms actions/claim-review.ts
+ GET /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23?notice=collected 200 in 482ms (next.js: 13ms, proxy.ts: 66ms, generate-params: 0.0ms, application-code: 403ms)
+ POST /staff/claims/11f2a8d3-c4eb-44e9-9a89-5a545d3efa23?notice=approved 200 in 823ms (next.js: 11ms, proxy.ts: 67ms, generate-params: 0.0ms, application-code: 745ms)
+  └─ ƒ recordHandover({"fieldErrors":{"photoIdChecked":"Check the owner's photo ID, then tick the box."}}, {}) in 245ms actions/claim-review.ts
+ GET /staff/items/6dcfe5db-0992-4310-b054-627ebef2c6b4 200 in 706ms (next.js: 18ms, proxy.ts: 66ms, generate-params: 8ms, application-code: 614ms)
+ GET /staff/items/6dcfe5db-0992-4310-b054-627ebef2c6b4?notice=contested 200 in 500ms (next.js: 13ms, proxy.ts: 74ms, generate-params: 0.0ms, application-code: 412ms)
+ POST /staff/items/6dcfe5db-0992-4310-b054-627ebef2c6b4 200 in 797ms (next.js: 12ms, proxy.ts: 76ms, generate-params: 9ms, application-code: 700ms)
+  └─ ƒ reopenContested({}, {}) in 178ms actions/claim-review.ts
+ GET /items/FYU-000024/claim 200 in 448ms (next.js: 10ms, proxy.ts: 8ms, generate-params: 8ms, application-code: 421ms)
+ GET /my?notice=claimed 200 in 355ms (next.js: 56ms, proxy.ts: 13ms, application-code: 285ms)
+ POST /items/FYU-000024/claim 200 in 763ms (next.js: 14ms, proxy.ts: 10ms, generate-params: 0.1ms, application-code: 738ms)
+  └─ ƒ submitClaim({}) in 361ms actions/claims.ts
+ GET /staff/claims/8f0d045d-a391-4d13-b810-f2743eff45fe 200 in 573ms (next.js: 13ms, proxy.ts: 70ms, generate-params: 8ms, application-code: 483ms)
+ GET /staff/claims/8f0d045d-a391-4d13-b810-f2743eff45fe?notice=approved 200 in 453ms (next.js: 15ms, proxy.ts: 77ms, generate-params: 10ms, application-code: 352ms)
+ POST /staff/claims/8f0d045d-a391-4d13-b810-f2743eff45fe 200 in 710ms (next.js: 12ms, proxy.ts: 64ms, generate-params: 0.0ms, application-code: 634ms)
+  └─ ƒ approveClaim({}, {}) in 163ms actions/claim-review.ts
+ GET /my 200 in 503ms (next.js: 11ms, proxy.ts: 10ms, application-code: 481ms)
+ GET /my?notice=pickup 200 in 273ms (next.js: 10ms, proxy.ts: 13ms, application-code: 250ms)
+ POST /my 200 in 486ms (next.js: 9ms, proxy.ts: 8ms, application-code: 469ms)
+  └─ ƒ requestAfterHoursPickup({}) in 176ms actions/claim-review.ts
+ GET /staff/claims/8f0d045d-a391-4d13-b810-f2743eff45fe 200 in 609ms (next.js: 10ms, proxy.ts: 72ms, generate-params: 7ms, application-code: 520ms)
+ GET /staff 200 in 471ms (next.js: 13ms, proxy.ts: 67ms, application-code: 391ms)
+✓ Compiled in 181ms
+ GET /staff 200 in 1111ms (next.js: 58ms, proxy.ts: 860ms, application-code: 193ms)
+ GET /admin/users 200 in 1111ms (next.js: 157ms, proxy.ts: 864ms, application-code: 90ms)
+✓ Compiled in 74ms
+ GET /admin/users 200 in 781ms (next.js: 146ms, proxy.ts: 527ms, application-code: 109ms)
+ GET /staff 200 in 782ms (next.js: 59ms, proxy.ts: 495ms, application-code: 228ms)
+✓ Compiled in 64ms
+ GET /admin/users 200 in 613ms (next.js: 19ms, proxy.ts: 345ms, application-code: 250ms)
+ GET /staff 200 in 614ms (next.js: 95ms, proxy.ts: 343ms, application-code: 176ms)
+ GET /admin/users 200 in 602ms (next.js: 71ms, proxy.ts: 412ms, application-code: 119ms)
+ GET /staff 200 in 542ms (next.js: 17ms, proxy.ts: 348ms, application-code: 176ms)
+✓ Compiled in 71ms
+ GET /staff 200 in 383ms (next.js: 20ms, proxy.ts: 183ms, application-code: 180ms)
+ GET /admin/users 200 in 383ms (next.js: 96ms, proxy.ts: 191ms, application-code: 97ms)
+ GET /admin/users 200 in 305ms (next.js: 20ms, proxy.ts: 181ms, application-code: 105ms)
+ GET /staff 200 in 427ms (next.js: 45ms, proxy.ts: 269ms, application-code: 113ms)
+ GET /admin/users 200 in 625ms (next.js: 18ms, proxy.ts: 171ms, application-code: 436ms)
+ GET /staff 200 in 627ms (next.js: 217ms, proxy.ts: 178ms, application-code: 231ms)
+✓ Compiled in 73ms
+ GET /staff 200 in 385ms (next.js: 13ms, proxy.ts: 272ms, application-code: 100ms)
+ GET /admin/users 200 in 497ms (next.js: 53ms, proxy.ts: 337ms, application-code: 107ms)
+✓ Compiled in 66ms
+⨯ ReferenceError: PastHoldingPeriod is not defined
+    at StaffDesk (app\staff\page.tsx:176:8)
+  174 |       </section>
+  175 |
+> 176 |       <PastHoldingPeriod locationId={profile.role === "admin" ? null : profile.locationId} />
+      |        ^
+  177 |     </>
+  178 |   );
+  179 | } {
+  digest: '2774319561'
+}
+ GET /staff 200 in 382ms (next.js: 32ms, proxy.ts: 221ms, application-code: 130ms)
+[browser] Uncaught ReferenceError: PastHoldingPeriod is not defined
+    at StaffDesk (app\staff\page.tsx:176:8)
+  174 |       </section>
+  175 |
+> 176 |       <PastHoldingPeriod locationId={profile.role === "admin" ? null : profile.locationId} />
+      |        ^
+  177 |     </>
+  178 |   );
+  179 | }
+ GET /admin/users 200 in 589ms (next.js: 67ms, proxy.ts: 320ms, application-code: 202ms)
+✓ Compiled in 122ms
+ GET /admin/users 200 in 775ms (next.js: 39ms, proxy.ts: 352ms, application-code: 384ms)
+ GET /staff 200 in 1147ms (next.js: 53ms, proxy.ts: 113ms, application-code: 981ms)
+✓ Compiled in 73ms
+ GET /admin/users 200 in 715ms (next.js: 182ms, proxy.ts: 192ms, application-code: 341ms)
+ GET /staff 200 in 734ms (next.js: 56ms, proxy.ts: 186ms, application-code: 492ms)
+✓ Compiled in 85ms
+ GET /admin/users 200 in 254ms (next.js: 17ms, proxy.ts: 82ms, application-code: 155ms)
+ GET /staff 200 in 547ms (next.js: 64ms, proxy.ts: 193ms, application-code: 289ms)
+✓ Compiled in 66ms
+ GET /staff 200 in 374ms (next.js: 16ms, proxy.ts: 90ms, application-code: 268ms)
+ GET /admin/users 200 in 376ms (next.js: 75ms, proxy.ts: 170ms, application-code: 131ms)
+✓ Compiled in 49ms
+ GET /admin/users 200 in 356ms (next.js: 18ms, proxy.ts: 92ms, application-code: 247ms)
+ GET /staff 200 in 421ms (next.js: 92ms, proxy.ts: 99ms, application-code: 231ms)
+✓ Compiled in 48ms
+ GET /admin/users 200 in 384ms (next.js: 110ms, proxy.ts: 92ms, application-code: 182ms)
+ GET /staff 200 in 388ms (next.js: 20ms, proxy.ts: 84ms, application-code: 283ms)
+✓ Compiled in 49ms
+ GET /admin/users 200 in 475ms (next.js: 160ms, proxy.ts: 111ms, application-code: 204ms)
+ GET /staff 200 in 479ms (next.js: 22ms, proxy.ts: 101ms, application-code: 356ms)
+✓ Compiled in 70ms
+ GET /admin/users 200 in 323ms (next.js: 18ms, proxy.ts: 95ms, application-code: 210ms)
+ GET /staff 200 in 434ms (next.js: 104ms, proxy.ts: 95ms, application-code: 235ms)
+✓ Compiled in 142ms
+ GET /admin/users 200 in 620ms (next.js: 124ms, proxy.ts: 102ms, application-code: 393ms)
+ GET /staff 200 in 672ms (next.js: 112ms, proxy.ts: 81ms, application-code: 480ms)
+✓ Compiled in 107ms
+ GET /admin/users 200 in 421ms (next.js: 20ms, proxy.ts: 177ms, application-code: 224ms)
+[browser] ./app/staff/items/[id]/page.tsx:7:1
+Error: Export isPastHolding doesn't exist in target module
+   5 | import { ArchiveForm } from "@/components/admin/admin-forms";
+   6 | import { ReopenForm } from "@/components/claims/review-forms";
+>  7 | import { holdingPeriodDays, isPastHolding } from "@/components/items/past-holding";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   8 | import { SpecialBanner } from "@/components/items/special-banner";
+   9 | import {
+  10 |   ArriveForm,
+
+The export isPastHolding was not found in module [project]/components/items/past-holding.tsx [app-rsc] (ecmascript).
+Did you mean to import PastHoldingPeriod?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist. 
+[browser] ./app/staff/items/[id]/page.tsx:7:1
+Error: Export isPastHolding doesn't exist in target module
+   5 | import { ArchiveForm } from "@/components/admin/admin-forms";
+   6 | import { ReopenForm } from "@/components/claims/review-forms";
+>  7 | import { holdingPeriodDays, isPastHolding } from "@/components/items/past-holding";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   8 | import { SpecialBanner } from "@/components/items/special-banner";
+   9 | import {
+  10 |   ArriveForm,
+
+The export isPastHolding was not found in module [project]/components/items/past-holding.tsx [app-rsc] (ecmascript).
+Did you mean to import PastHoldingPeriod?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist. 
+✓ Compiled in 1576ms
+ GET /admin/users 200 in 484ms (next.js: 91ms, proxy.ts: 111ms, application-code: 282ms)
+ GET /staff 500 in 4.1s (next.js: 3.5s, proxy.ts: 189ms, application-code: 404ms)
+ GET /staff 200 in 407ms (next.js: 59ms, proxy.ts: 102ms, application-code: 246ms)
+ GET /staff 200 in 1040ms (next.js: 41ms, proxy.ts: 80ms, application-code: 920ms)
+✓ Compiled in 112ms
+ GET /staff 200 in 581ms (next.js: 64ms, proxy.ts: 206ms, application-code: 311ms)
+ GET /admin/users 200 in 587ms (next.js: 188ms, proxy.ts: 266ms, application-code: 133ms)
+ GET / 200 in 109ms (next.js: 23ms, proxy.ts: 6ms, application-code: 80ms)
+ GET / 200 in 340ms (next.js: 20ms, proxy.ts: 14ms, application-code: 306ms)
+ GET /auth/confirm?token_hash=38a306330752c8de92b82528302c6cb27f13c10b28c00e9a9604cf64&type=magiclink 200 in 1235ms (next.js: 321ms, proxy.ts: 11ms, application-code: 902ms)
+ GET / 200 in 496ms (next.js: 68ms, proxy.ts: 84ms, application-code: 344ms)
+ POST /auth/confirm?token_hash=38a306330752c8de92b82528302c6cb27f13c10b28c00e9a9604cf64&type=magiclink 200 in 817ms (next.js: 84ms, proxy.ts: 13ms, application-code: 719ms)
+  └─ ƒ completeSignIn({}) in 190ms actions/auth.ts
+ GET / 200 in 519ms (next.js: 28ms, proxy.ts: 12ms, application-code: 479ms)
+ GET /auth/confirm?token_hash=305f5c1122a5cf3e7c3e9e76623a1b105cb77f8bac6fcef9c86f700b&type=magiclink 200 in 328ms (next.js: 15ms, proxy.ts: 9ms, application-code: 304ms)
+ GET / 200 in 316ms (next.js: 33ms, proxy.ts: 12ms, application-code: 271ms)
+ POST /auth/confirm?token_hash=305f5c1122a5cf3e7c3e9e76623a1b105cb77f8bac6fcef9c86f700b&type=magiclink 200 in 471ms (next.js: 24ms, proxy.ts: 10ms, application-code: 437ms)
+  └─ ƒ completeSignIn({}) in 98ms actions/auth.ts
+ GET / 200 in 260ms (next.js: 17ms, proxy.ts: 16ms, application-code: 228ms)
+ GET /auth/confirm?token_hash=a2d8b780175e539a68435ac6e2d11939f73f1f2c07cdb537728cf69b&type=magiclink 200 in 437ms (next.js: 16ms, proxy.ts: 12ms, application-code: 409ms)
+ GET / 200 in 282ms (next.js: 16ms, proxy.ts: 17ms, application-code: 249ms)
+ POST /auth/confirm?token_hash=a2d8b780175e539a68435ac6e2d11939f73f1f2c07cdb537728cf69b&type=magiclink 200 in 478ms (next.js: 37ms, proxy.ts: 15ms, application-code: 425ms)
+  └─ ƒ completeSignIn({}) in 111ms actions/auth.ts
+ GET /staff/intake 200 in 810ms (next.js: 73ms, proxy.ts: 60ms, application-code: 678ms)
+ GET /staff/items/227fc1f9-d6c5-4576-ba45-9617758b5f2e?notice=received 200 in 2.2s (next.js: 340ms, proxy.ts: 85ms, generate-params: 22ms, application-code: 1732ms)
+ POST /staff/intake 200 in 3.1s (next.js: 40ms, proxy.ts: 88ms, application-code: 2.9s)
+  └─ ƒ logWalkInItem({}) in 666ms actions/items.ts
+ GET /staff 200 in 1983ms (next.js: 259ms, proxy.ts: 65ms, application-code: 1658ms)
+ GET /staff/items/227fc1f9-d6c5-4576-ba45-9617758b5f2e 200 in 1273ms (next.js: 47ms, proxy.ts: 77ms, generate-params: 0.1ms, application-code: 1149ms)
+ POST /staff/items/227fc1f9-d6c5-4576-ba45-9617758b5f2e 200 in 190ms (next.js: 12ms, proxy.ts: 62ms, generate-params: 8ms, application-code: 108ms)
+  └─ ƒ archiveItem({}, {}) in 89ms actions/expiry.ts
+ GET /staff/items/227fc1f9-d6c5-4576-ba45-9617758b5f2e?notice=archived 200 in 576ms (next.js: 12ms, proxy.ts: 134ms, generate-params: 0.0ms, application-code: 430ms)
+ POST /staff/items/227fc1f9-d6c5-4576-ba45-9617758b5f2e 200 in 986ms (next.js: 16ms, proxy.ts: 64ms, generate-params: 0.0ms, application-code: 906ms)
+  └─ ƒ archiveItem({"error":"Choose donated or disposed."}, {}) in 313ms actions/expiry.ts
+ GET /admin/archived 200 in 1176ms (next.js: 672ms, proxy.ts: 86ms, application-code: 417ms)
+[browser] An async function with useActionState was called outside of a transition. This is likely not what you intended (for example, isPending will not update correctly). Either call the returned function inside startTransition, or pass it to an `action` or `formAction` prop. 
+    at <unknown> (components/admin/admin-forms.tsx:104:7)
+  102 |         return;
+  103 |       }
+> 104 |       formAction(formData);
+      |       ^
+  105 |     });
+  106 |   }
+  107 | (components/admin/admin-forms.tsx:104:7)
+ GET /admin/archived?notice=restored 200 in 455ms (next.js: 12ms, proxy.ts: 93ms, application-code: 350ms)
+ POST /admin/archived 200 in 981ms (next.js: 18ms, proxy.ts: 70ms, application-code: 892ms)
+  └─ ƒ restoreItem({}, {}) in 407ms actions/expiry.ts
+ GET /admin/settings 200 in 836ms (next.js: 405ms, proxy.ts: 78ms, application-code: 352ms)
+ POST /admin/settings 200 in 473ms (next.js: 34ms, proxy.ts: 80ms, application-code: 360ms)
+  └─ ƒ saveSettings({}, {}) in 139ms actions/catalog.ts
+ GET /items/FYU-000025/claim 200 in 526ms (next.js: 31ms, proxy.ts: 7ms, generate-params: 8ms, application-code: 479ms)
+ GET /my?notice=claimed 200 in 302ms (next.js: 32ms, proxy.ts: 8ms, application-code: 262ms)
+ POST /items/FYU-000025/claim 200 in 586ms (next.js: 12ms, proxy.ts: 8ms, generate-params: 7ms, application-code: 559ms)
+  └─ ƒ submitClaim({}) in 215ms actions/claims.ts
+ GET /staff/claims/bdaac093-8363-43aa-9010-2ac077284144 200 in 761ms (next.js: 52ms, proxy.ts: 72ms, generate-params: 10ms, application-code: 628ms)
+ GET /staff/claims/bdaac093-8363-43aa-9010-2ac077284144?notice=approved 200 in 477ms (next.js: 13ms, proxy.ts: 64ms, generate-params: 8ms, application-code: 392ms)
+ POST /staff/claims/bdaac093-8363-43aa-9010-2ac077284144 200 in 699ms (next.js: 12ms, proxy.ts: 63ms, generate-params: 0.0ms, application-code: 623ms)
+  └─ ƒ approveClaim({}, {}) in 130ms actions/claim-review.ts
+ GET /staff/claims/bdaac093-8363-43aa-9010-2ac077284144?notice=collected 200 in 429ms (next.js: 10ms, proxy.ts: 64ms, generate-params: 8ms, application-code: 347ms)
+ POST /staff/claims/bdaac093-8363-43aa-9010-2ac077284144?notice=approved 200 in 908ms (next.js: 12ms, proxy.ts: 69ms, generate-params: 0.1ms, application-code: 826ms)
+  └─ ƒ recordHandover({}, {}) in 378ms actions/claim-review.ts
+ GET /admin/audit?ref=FYU-000025 200 in 1159ms (next.js: 516ms, proxy.ts: 60ms, application-code: 582ms)
+ GET /admin/settings 200 in 447ms (next.js: 15ms, proxy.ts: 53ms, application-code: 379ms)
+ POST /admin/settings 200 in 464ms (next.js: 16ms, proxy.ts: 74ms, application-code: 374ms)
+  └─ ƒ runPrivacyCleanup() in 149ms actions/expiry.ts
+ GET /admin/audit?type=privacy_cleanup 200 in 333ms (next.js: 19ms, proxy.ts: 57ms, application-code: 257ms)
+ GET /admin/buildings 200 in 793ms (next.js: 286ms, proxy.ts: 60ms, application-code: 446ms)
+ POST /admin/buildings 200 in 573ms (next.js: 28ms, proxy.ts: 91ms, application-code: 454ms)
+  └─ ƒ saveBuilding({}, {}) in 124ms actions/catalog.ts
+ GET /admin/buildings 200 in 506ms (next.js: 10ms, proxy.ts: 60ms, application-code: 436ms)
+ POST /admin/buildings 200 in 522ms (next.js: 19ms, proxy.ts: 73ms, application-code: 430ms)
+  └─ ƒ saveBuilding({}, {}) in 187ms actions/catalog.ts
+ GET /admin/locations 200 in 878ms (next.js: 309ms, proxy.ts: 67ms, application-code: 503ms)
+ GET /admin/categories 200 in 850ms (next.js: 326ms, proxy.ts: 58ms, application-code: 466ms)
+ GET /?notice=forbidden 200 in 589ms (next.js: 170ms, proxy.ts: 7ms, application-code: 412ms)
+ GET /admin 200 in 936ms (next.js: 522ms, proxy.ts: 60ms, application-code: 354ms)

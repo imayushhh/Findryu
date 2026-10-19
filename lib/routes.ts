@@ -13,6 +13,12 @@ export const routes = {
   staffIntake: "/staff/intake",
   admin: "/admin",
   adminUsers: "/admin/users",
+  adminSettings: "/admin/settings",
+  adminLocations: "/admin/locations",
+  adminBuildings: "/admin/buildings",
+  adminCategories: "/admin/categories",
+  adminArchived: "/admin/archived",
+  adminAudit: "/admin/audit",
 } as const;
 
 export function itemPath(ref: string) {
