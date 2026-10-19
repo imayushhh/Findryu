@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import { ReopenForm } from "@/components/claims/review-forms";
 import { SpecialBanner } from "@/components/items/special-banner";
 import {
   ArriveForm,
@@ -11,6 +12,7 @@ import {
 } from "@/components/items/staff-item-forms";
 import { PageShell } from "@/components/layout/page-shell";
 import { getCurrentProfile } from "@/lib/auth";
+import { claimStatusLabel, isClaimStatus } from "@/lib/claims/text";
 import {
   deskPlace,
   related,
@@ -18,7 +20,7 @@ import {
   transferReasonLabel,
   type TransferReason,
 } from "@/lib/items/text";
-import { routes } from "@/lib/routes";
+import { routes, staffClaimPath } from "@/lib/routes";
 import { textLinkClass } from "@/lib/styles";
 import { createClient } from "@/lib/supabase/server";
 import { formatToronto } from "@/lib/time";
@@ -28,6 +30,7 @@ const notices: Record<string, string> = {
   secret: "The hidden detail is updated.",
   transferred: "The transfer is recorded. The current desk is updated.",
   arrived: "The item is marked arrived.",
+  contested: "The item is reopened as contested. Use the previous owner's contact details below to recover it.",
   unchanged: "That item could not be updated.",
 };
 
@@ -72,7 +75,7 @@ async function StaffItem({
   const noticeKey = (await searchParams).notice;
   const notice = noticeKey ? notices[noticeKey] : undefined;
   const supabase = await createClient();
-  const [{ data: item }, { data: secret }, { data: transfers }, { data: locations }] =
+  const [{ data: item }, { data: secret }, { data: transfers }, { data: locations }, { data: claims }] =
     await Promise.all([
       supabase
         .from("items")
@@ -90,6 +93,13 @@ async function StaffItem({
         .eq("item_id", id)
         .order("sent_at", { ascending: false }),
       supabase.from("locations").select("id, name, kind").eq("active", true).order("name"),
+      supabase
+        .from("claims")
+        .select(
+          "id, status, created_at, no_proof, rejection_reason, contact_phone, contact_address, claimant:profiles!claims_claimant_id_fkey(email)",
+        )
+        .eq("item_id", id)
+        .order("created_at"),
     ]);
 
   if (!item) {
@@ -117,6 +127,11 @@ async function StaffItem({
   const transferChoices = (locations ?? []).filter(
     (location) => location.id !== item.current_location_id,
   );
+  const claimRows = claims ?? [];
+  const previousOwner =
+    item.status === "contested"
+      ? [...claimRows].reverse().find((claim) => claim.rejection_reason?.startsWith("Reopened as contested"))
+      : undefined;
 
   return (
     <PageShell title={item.ref_code}>
@@ -181,6 +196,49 @@ async function StaffItem({
             }
             defaultReason={reason}
           />
+        </section>
+      ) : null}
+
+      {previousOwner ? (
+        <section aria-labelledby="previous-owner" className="space-y-2 rounded-lg border border-destructive bg-destructive/10 p-4">
+          <h2 id="previous-owner" className="text-xl font-semibold">
+            Previous owner
+          </h2>
+          <p>Email: {related(previousOwner.claimant)?.email ?? "not recorded"}</p>
+          <p>Phone: {previousOwner.contact_phone ?? "not recorded"}</p>
+          <p>Address: {previousOwner.contact_address ?? "not recorded"}</p>
+          <p className="text-sm">{previousOwner.rejection_reason}</p>
+        </section>
+      ) : null}
+
+      {claimRows.length > 0 ? (
+        <section aria-labelledby="item-claims" className="space-y-2">
+          <h2 id="item-claims" className="text-xl font-semibold">
+            Claims
+          </h2>
+          <ul className="space-y-1">
+            {claimRows.map((claim) => (
+              <li key={claim.id}>
+                <Link href={staffClaimPath(claim.id)} className={textLinkClass}>
+                  {isClaimStatus(claim.status) ? claimStatusLabel(claim.status) : claim.status}:{" "}
+                  {related(claim.claimant)?.email ?? "claimant"}, {formatToronto(claim.created_at)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {item.status === "collected" && atThisDesk ? (
+        <section aria-labelledby="reopen-item" className="space-y-3">
+          <h2 id="reopen-item" className="text-xl font-semibold">
+            Reopen
+          </h2>
+          <p>
+            If a stronger claim appears after the handover, reopen the item. The previous owner&apos;s
+            contact details are then shown here so you can recover it.
+          </p>
+          <ReopenForm itemId={item.id} />
         </section>
       ) : null}
 

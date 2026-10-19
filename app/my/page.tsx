@@ -2,6 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import { requestAfterHoursPickup } from "@/actions/claim-review";
+import { SubmitButton } from "@/components/items/submit-button";
 import { PageShell } from "@/components/layout/page-shell";
 import { getCurrentProfile } from "@/lib/auth";
 import { claimStatusExplanation, claimStatusLabel, isClaimStatus } from "@/lib/claims/text";
@@ -46,7 +48,7 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
     supabase
       .from("claims")
       .select(
-        "id, status, hold_until, rejection_reason, created_at, items(ref_code, description, status, current:locations!items_current_location_id_fkey(name, building, room, hours))",
+        "id, status, hold_until, rejection_reason, pickup_request, created_at, items(ref_code, description, status, current:locations!items_current_location_id_fkey(name, building, room, hours))",
       )
       .eq("claimant_id", profile.id)
       .order("created_at", { ascending: false }),
@@ -67,6 +69,16 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
       {notice === "claimed" ? (
         <p role="status" className="rounded-lg border border-border bg-card p-4">
           Your claim was sent. Staff at the desk will review it.
+        </p>
+      ) : null}
+      {notice === "pickup" ? (
+        <p role="status" className="rounded-lg border border-border bg-card p-4">
+          After-hours pickup is requested. Bring photo ID to Security Services.
+        </p>
+      ) : null}
+      {notice === "pickup-failed" ? (
+        <p role="alert" className="rounded-lg border border-destructive bg-destructive/10 p-4">
+          After-hours pickup could not be requested. Try again or contact the desk.
         </p>
       ) : null}
 
@@ -118,6 +130,18 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
                 {status === "approved" && desk ? (
                   <p className="text-sm">
                     Pick up at {deskPlace(desk)}.{desk.hours ? ` Hours: ${desk.hours}` : null}
+                  </p>
+                ) : null}
+                {status === "approved" && claim.pickup_request === "desk" ? (
+                  <form action={requestAfterHoursPickup}>
+                    <input type="hidden" name="claimId" value={claim.id} />
+                    <SubmitButton pendingLabel="Requesting…">Pick up after hours at Security Services</SubmitButton>
+                  </form>
+                ) : null}
+                {status === "approved" && claim.pickup_request === "security_services" ? (
+                  <p className="text-sm">
+                    You asked for after-hours pickup. Security Services will hold the item once staff move it
+                    there.
                   </p>
                 ) : null}
                 <p className="text-sm text-muted-foreground">Sent {formatToronto(claim.created_at)}</p>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import { ClaimQueues } from "@/components/claims/claim-queues";
 import { SpecialBanner } from "@/components/items/special-banner";
 import { PageShell } from "@/components/layout/page-shell";
 import { buttonVariants } from "@/components/ui/button";
@@ -100,6 +101,8 @@ async function StaffDesk() {
           Log a walk-in
         </Link>
       </div>
+
+      <ClaimQueues />
 
       <section aria-labelledby="awaiting-receipt" className="space-y-3">
         <h2 id="awaiting-receipt" className="text-xl font-semibold tracking-tight">
