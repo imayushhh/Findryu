@@ -77,3 +77,8 @@ function nextCalendarDate(date: string) {
   const day = String(utc.getUTCDate()).padStart(2, "0");
   return `${utc.getUTCFullYear()}-${month}-${day}`;
 }
+
+/** Today's date in Toronto, as YYYY-MM-DD. */
+export function torontoToday() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Toronto" }).format(new Date());
+}

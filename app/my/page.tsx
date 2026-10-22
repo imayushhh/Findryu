@@ -8,7 +8,7 @@ import { PageShell } from "@/components/layout/page-shell";
 import { getCurrentProfile } from "@/lib/auth";
 import { claimStatusExplanation, claimStatusLabel, isClaimStatus } from "@/lib/claims/text";
 import { deskPlace, related } from "@/lib/items/text";
-import { itemPath, routes } from "@/lib/routes";
+import { itemPath, lostReportEditPath, routes } from "@/lib/routes";
 import { textLinkClass } from "@/lib/styles";
 import { createClient } from "@/lib/supabase/server";
 import { formatToronto } from "@/lib/time";
@@ -24,6 +24,13 @@ const itemStatusLabels: Record<string, string> = {
   collected: "Returned to its owner",
   contested: "Under review",
   archived: "Closed",
+};
+
+const lostNotices: Record<string, string> = {
+  "lost-saved": "Your lost item is registered. We will email you if a matching item is handed in.",
+  "lost-updated": "Your lost report is updated.",
+  "lost-cancelled": "Your lost report is cancelled. You will not get more alerts for it.",
+  "lost-failed": "That lost report could not be changed. Refresh the page and try again.",
 };
 
 export default function MyPage({ searchParams }: { searchParams: Promise<{ notice?: string }> }) {
@@ -44,7 +51,7 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
   const { notice } = await searchParams;
 
   const supabase = await createClient();
-  const [claims, reported] = await Promise.all([
+  const [claims, reported, lost] = await Promise.all([
     supabase
       .from("claims")
       .select(
@@ -59,7 +66,15 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
       )
       .eq("reported_by", profile.id)
       .order("created_at", { ascending: false }),
+    supabase
+      .from("lost_reports")
+      .select(
+        "id, description, status, lost_from, lost_to, created_at, categories(name), buildings(name), lost_report_alerts(id, items(ref_code, description, status))",
+      )
+      .eq("owner_id", profile.id)
+      .order("created_at", { ascending: false }),
   ]);
+  const lostRows = lost.data ?? [];
 
   const claimRows = claims.data ?? [];
   const reportedRows = reported.data ?? [];
@@ -69,6 +84,14 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
       {notice === "claimed" ? (
         <p role="status" className="rounded-lg border border-border bg-card p-4">
           Your claim was sent. Staff at the desk will review it.
+        </p>
+      ) : null}
+      {notice && lostNotices[notice] ? (
+        <p
+          role={notice === "lost-failed" ? "alert" : "status"}
+          className="rounded-lg border border-border bg-card p-4"
+        >
+          {lostNotices[notice]}
         </p>
       ) : null}
       {notice === "pickup" ? (
@@ -145,6 +168,68 @@ async function MyPanel({ searchParams }: { searchParams: Promise<{ notice?: stri
                   </p>
                 ) : null}
                 <p className="text-sm text-muted-foreground">Sent {formatToronto(claim.created_at)}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      <section aria-labelledby="my-lost" className="space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 id="my-lost" className="text-xl font-semibold tracking-tight">
+            Lost items I registered
+          </h2>
+          <Link href={routes.lostReportNew} className={textLinkClass}>
+            Register a lost item
+          </Link>
+        </div>
+        {lost.error ? <p>Your lost reports could not be loaded. Refresh the page.</p> : null}
+        {!lost.error && lostRows.length === 0 ? (
+          <p>You have not registered a lost item. Register one to get an email if it is handed in.</p>
+        ) : null}
+        <ul className="grid gap-3">
+          {lostRows.map((report) => {
+            const matches = (report.lost_report_alerts ?? [])
+              .map((alert) => related(alert.items))
+              .filter(
+                (item): item is NonNullable<typeof item> =>
+                  item !== null && (item.status === "received" || item.status === "in_transit"),
+              );
+            return (
+              <li key={report.id} className="space-y-1 rounded-lg border border-border p-4">
+                <p className="break-words font-semibold">{report.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {[related(report.categories)?.name, related(report.buildings)?.name, `${report.lost_from} to ${report.lost_to}`]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+                <p>
+                  Status:{" "}
+                  <span className="font-medium">
+                    {report.status === "active" ? "Watching for matches" : report.status === "cancelled" ? "Cancelled" : "Matched"}
+                  </span>
+                </p>
+                {matches.length > 0 ? (
+                  <div>
+                    <p className="font-medium">Possible matches:</p>
+                    <ul>
+                      {matches.map((item) => (
+                        <li key={item.ref_code}>
+                          <Link href={itemPath(item.ref_code)} className={textLinkClass}>
+                            {item.ref_code}: {item.description}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {report.status === "active" ? (
+                  <p>
+                    <Link href={lostReportEditPath(report.id)} className={textLinkClass}>
+                      Edit or cancel<span className="sr-only"> this lost report</span>
+                    </Link>
+                  </p>
+                ) : null}
               </li>
             );
           })}

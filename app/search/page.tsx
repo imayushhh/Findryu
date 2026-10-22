@@ -32,6 +32,13 @@ export default function SearchPage({
       <Suspense fallback={<p>Loading search…</p>}>
         <SearchPanel searchParams={searchParams} />
       </Suspense>
+      <p className="border-t border-border pt-4">
+        Not here yet?{" "}
+        <Link href={routes.lostReportNew} className={textLinkClass}>
+          Register your lost item
+        </Link>{" "}
+        and we will email you if a match is handed in.
+      </p>
     </PageShell>
   );
 }

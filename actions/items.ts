@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { alertLostReportOwners } from "@/lib/alerts";
+import { emailFinderItemReceived, emailFoundReportSubmitted } from "@/lib/email";
 import type { CurrentProfile } from "@/lib/auth";
 import { getCurrentProfile } from "@/lib/auth";
 import { routes, staffItemPath } from "@/lib/routes";
@@ -151,6 +153,7 @@ export async function reportFoundItem(formData: FormData): Promise<ItemFormState
     return { error: itemWriteError(error?.message ?? "") };
   }
 
+  await emailFoundReportSubmitted(profile.email, refCode, parsed.data.locationId);
   revalidatePath(routes.staff);
   redirect(`${routes.reportSuccess}?ref=${encodeURIComponent(refCode)}`);
 }
@@ -225,6 +228,7 @@ export async function logWalkInItem(formData: FormData): Promise<ItemFormState> 
     return { error: itemWriteError(error?.message ?? "") };
   }
 
+  await alertLostReportOwners(itemId);
   revalidatePath(routes.staff);
   redirect(`${staffItemPath(itemId)}?notice=received`);
 }
@@ -284,6 +288,7 @@ export async function receiveItem(
     return { error: itemWriteError(error.message) };
   }
 
+  await Promise.all([alertLostReportOwners(item.id), emailFinderItemReceived(item.id)]);
   revalidatePath(routes.staff);
   revalidatePath(staffItemPath(item.id));
   redirect(`${staffItemPath(item.id)}?notice=received`);

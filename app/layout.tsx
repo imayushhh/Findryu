@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
+import { Suspense } from "react";
+
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 
@@ -31,17 +33,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
-        <a
-          href="#main-content"
-          className="absolute left-4 top-4 z-50 -translate-y-24 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground focus:translate-y-0 focus:outline-2 focus:outline-offset-2 focus:outline-foreground"
-        >
-          Skip to main content
-        </a>
-        <SiteHeader />
+        <Suspense fallback={null}>
+          <SiteHeader />
+        </Suspense>
         <main id="main-content" tabIndex={-1} className="flex flex-1 flex-col outline-none">
           {children}
         </main>
-        <SiteFooter />
+        <Suspense fallback={null}>
+          <SiteFooter />
+        </Suspense>
       </body>
     </html>
   );

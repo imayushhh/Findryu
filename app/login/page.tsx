@@ -4,21 +4,23 @@ import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/login-form";
 import { PageShell } from "@/components/layout/page-shell";
 import { getCurrentProfile } from "@/lib/auth";
+import { getLocale, t, type Locale } from "@/lib/i18n";
 import { isStaffOrAdminPath, safeNextPath } from "@/lib/routes";
 
 export const metadata = {
   title: "Sign in",
 };
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
   searchParams: Promise<{ next?: string; error?: string }>;
 }) {
+  const locale = await getLocale();
   return (
-    <PageShell title="Sign in">
+    <PageShell title={t(locale, "loginTitle")}>
       <Suspense fallback={<p>Loading sign-in…</p>}>
-        <LoginPanel searchParams={searchParams} />
+        <LoginPanel searchParams={searchParams} locale={locale} />
       </Suspense>
     </PageShell>
   );
@@ -26,8 +28,10 @@ export default function LoginPage({
 
 async function LoginPanel({
   searchParams,
+  locale,
 }: {
   searchParams: Promise<{ next?: string; error?: string }>;
+  locale: Locale;
 }) {
   const params = await searchParams;
   const next = safeNextPath(params.next);
@@ -54,10 +58,7 @@ async function LoginPanel({
           <span className="font-medium">{blockedPath}</span>.
         </p>
       ) : null}
-      <p>
-        Use your York email, ending in @yorku.ca or @my.yorku.ca. FindrYU will
-        email you a sign-in link.
-      </p>
+      <p>{t(locale, "loginIntro")}</p>
       <LoginForm next={next} initialError={initialError} />
     </>
   );
